@@ -52,7 +52,7 @@ public class FluidHopperMinecart extends AbstractMinecart {
             IFluidHandler handler = FluidHopperMinecart.this.getCapability(ForgeCapabilities.FLUID_HANDLER, null).orElse(null);
             if (handler != null && handler.getFluidInTank(0) != null) {
                 FluidStack f = handler.getFluidInTank(0);
-                if (!FluidHopperMinecart.this.getLevel().isClientSide) {
+                if (!FluidHopperMinecart.this.level().isClientSide) {
                     FluidHopperMinecart.this.setFluid(f);
                 }
 
@@ -161,7 +161,7 @@ public class FluidHopperMinecart extends AbstractMinecart {
         if (p_19978_.isSecondaryUseActive()) {
             return InteractionResult.PASS;
         }
-        else if (!this.level.isClientSide) {
+        else if (!this.level().isClientSide) {
             if (ClientConfigCyclic.FLUID_BLOCK_STATUS.get()) {
                 p_19978_.displayClientMessage(Component.translatable(BlockCyclic.getFluidRatioName(this.tank)), true);
                 return InteractionResult.SUCCESS;
@@ -175,7 +175,7 @@ public class FluidHopperMinecart extends AbstractMinecart {
 
     public void tick() {
         super.tick();
-        if (!this.level.isClientSide) {
+        if (!this.level().isClientSide) {
             if (this.isEnabled()) {
                 this.tryExtract();
             }
@@ -187,12 +187,12 @@ public class FluidHopperMinecart extends AbstractMinecart {
             BlockPos target = this.blockPosition().relative(Direction.UP);
             List<AABB> aabbs = Hopper.SUCK.toAabbs();
             aabbs.add(this.getBoundingBox().move(position().scale(-1)).move(0.5, 0, 0.5).inflate(0.25, 0, 0.25));
-            if(tryFillFromTankEntities(aabbs.stream().map(aabb -> aabb.move(getX() - 0.5, getY(), getZ() - 0.5)), getLevel(), this, this.tank))
+            if(tryFillFromTankEntities(aabbs.stream().map(aabb -> aabb.move(getX() - 0.5, getY(), getZ() - 0.5)), level(), this, this.tank))
                 return;
-            if(tryFillFromTankBlocks(aabbs.stream().map(aabb -> aabb.move(getX() - 0.5, getY(), getZ() - 0.5)), getLevel(), this.tank))
+            if(tryFillFromTankBlocks(aabbs.stream().map(aabb -> aabb.move(getX() - 0.5, getY(), getZ() - 0.5)), level(), this.tank))
                 return;
             if (this.tank.getSpace() >= CAPACITY) {
-                FluidHelpers.extractSourceWaterloggedCauldron(this.level, target, this.tank);
+                FluidHelpers.extractSourceWaterloggedCauldron(this.level(), target, this.tank);
             }
         }
     }

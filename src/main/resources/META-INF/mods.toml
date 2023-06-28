@@ -61,13 +61,13 @@ side = "BOTH"
 modId = "minecraft"
 mandatory = true
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
-versionRange = "[1.19.2,1.20)"
+versionRange = "[1.20.1,1.21)"
 ordering = "NONE"
 side = "BOTH"
 [[dependencies.fluidhoppercart]]
 modId = "cyclic"
 mandatory = true
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
-versionRange = "[1.19.2-1.8.0,1.20)"
+versionRange = "[1.11.1,1.12)"
 ordering = "BEFORE"
 side = "BOTH"
